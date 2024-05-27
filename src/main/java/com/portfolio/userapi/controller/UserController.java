@@ -91,9 +91,8 @@ public class UserController {
 	@GetMapping("/username/{username}")
 	public ResponseEntity<Object> getUserByUserName(@PathVariable(value = "username") String userName) {
 		Optional<UserEntity> userEntityOptional = userService.findByUserName(userName);
-		return !userEntityOptional.isPresent()
-				? ResponseEntity.status(HttpStatus.NOT_FOUND).body(LEGEND_USER_NOT_FOUND)
-				: ResponseEntity.status(HttpStatus.OK).body(userEntityOptional.get());
+		return userEntityOptional.<ResponseEntity<Object>>map(userEntity -> ResponseEntity.status(HttpStatus.OK).body(userEntity)).
+				orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(LEGEND_USER_NOT_FOUND));
 	}
 
 	@Operation(summary = "Get a user by cpf", description = "Returns a user record given its cpf")

@@ -76,7 +76,7 @@ public class UserService {
 		List<UserEntity> filteredList = userEntityList
 				.stream()
 				.filter(x -> x.getId() != id)
-				.collect(Collectors.toList());
+				.toList();
 
 		return !filteredList.isEmpty();
 	}
@@ -186,11 +186,7 @@ public class UserService {
 		LocalDate currentDate = LocalDate.now();
 		var period = Period.between(dateOfBirth, currentDate);
 
-		if (period.getYears() < Config.ALLOWED_AGE_USERS_REGISTRATION) {
-			return true;
-		}
-
-		return false;
+		return period.getYears() < Config.ALLOWED_AGE_USERS_REGISTRATION;
 	}
 
 }
