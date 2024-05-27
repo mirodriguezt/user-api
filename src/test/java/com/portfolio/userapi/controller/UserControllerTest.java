@@ -399,7 +399,7 @@ public class UserControllerTest {
 				LocalDate.of(1999, 12, 31),
 				"new_email@fake.com");
 
-		when(userServiceMock.findById(1L)).thenReturn(Optional.ofNullable(null));
+		when(userServiceMock.findById(1L)).thenReturn(Optional.empty());
 
 		ResponseEntity<Object> responseEntity = userController.updateUserById(1L, userSaveRecord);
 
